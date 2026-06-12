@@ -1,0 +1,348 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.hero{padding:2rem 0 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.meta-row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:3px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tab{padding:8px 14px;font-size:13px;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
+.tab.active{color:var(--color-text-primary);border-bottom:2px solid #534AB7;font-weight:500}
+.tab:hover:not(.active){color:var(--color-text-primary)}
+.mod-grid{display:flex;flex-direction:column;gap:10px}
+.mod-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.mod-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
+.mod-badge{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.m1{background:#E1F5EE;color:#085041} .m2{background:#FAEEDA;color:#633806} .m3{background:#EEEDFE;color:#3C3489} .m4{background:#FAECE7;color:#993C1D}
+.mod-title{font-size:14px;font-weight:500;color:var(--color-text-primary);flex:1}
+.mod-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.chev{font-size:15px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.mod-body{border-top:0.5px solid var(--color-border-tertiary);padding:14px}
+.ses-list{display:flex;flex-direction:column;gap:8px}
+.ses{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:11px 13px}
+.ses-hdr{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.ses-num{font-size:11px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);padding:2px 7px;border-radius:20px}
+.ses-date{font-size:11px;color:var(--color-text-secondary)}
+.ses-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:7px}
+.topics{display:flex;flex-direction:column;gap:3px;margin-bottom:9px}
+.topic{font-size:12px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:5px;line-height:1.5}
+.topic::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--color-border-primary);flex-shrink:0;margin-top:6px}
+.ex-sec{margin-top:9px;padding-top:9px;border-top:0.5px solid var(--color-border-tertiary)}
+.ex-tabs{display:flex;gap:5px;margin-bottom:7px}
+.ex-tab{font-size:11px;padding:2px 9px;border-radius:20px;cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary)}
+.ex-tab.active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
+.ex-list{display:flex;flex-direction:column;gap:5px}
+.ex-item{font-size:12px;color:var(--color-text-primary);background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:7px 10px;line-height:1.5}
+.ex-item span{font-size:10px;font-weight:500;margin-right:5px;padding:1px 5px;border-radius:10px}
+.tag-g{background:#E1F5EE;color:#085041} .tag-p{background:#E6F1FB;color:#0C447C}
+.sched-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:1.5rem}
+.sched-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px}
+.sched-num{font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:3px}
+.sched-date{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.sched-mod{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.sched-time{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--color-text-secondary);margin-top:7px}
+.info-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px}
+.info-card h3{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
+.info-card p{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.prof-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px}
+.prof-hdr{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.prof-av{width:44px;height:44px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px;color:#3C3489;flex-shrink:0}
+.prof-name{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.prof-role{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.prof-bio{font-size:12px;color:var(--color-text-secondary);line-height:1.7;border-top:0.5px solid var(--color-border-tertiary);padding-top:10px}
+.tags-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.tag{font-size:11px;padding:2px 9px;border-radius:20px;background:#EEEDFE;color:#3C3489;border:0.5px solid #AFA9EC}
+.hidden{display:none}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.prog-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px}
+.prog-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.prog-badge{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.prog-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.prog-items{display:flex;flex-direction:column;gap:3px}
+.prog-item{font-size:11px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:4px;line-height:1.5}
+.prog-item::before{content:"·";flex-shrink:0;color:var(--color-border-primary)}
+</style>
+
+<h2 class="sr-only">Página del programa Python para Finanzas — EAFIT y Asobancaria — 7 sesiones, 4 módulos</h2>
+
+<div class="hero">
+  <h1>Python para finanzas</h1>
+  <p>Programa académico EAFIT · Asobancaria · Junio – Julio 2025</p>
+  <div class="meta-row">
+    <div class="pill"><i class="ti ti-clock" aria-hidden="true"></i> 20 horas · 7 sesiones</div>
+    <div class="pill"><i class="ti ti-device-laptop" aria-hidden="true"></i> Modalidad online</div>
+    <div class="pill"><i class="ti ti-calendar" aria-hidden="true"></i> 24 jun – 22 jul 2025</div>
+    <div class="pill"><i class="ti ti-certificate" aria-hidden="true"></i> Certificación 80% asistencia</div>
+    <div class="pill"><i class="ti ti-school" aria-hidden="true"></i> Nivel básico–intermedio</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('modulos')">Módulos y sesiones</button>
+  <button class="tab" onclick="showTab('programa')">Programa</button>
+  <button class="tab" onclick="showTab('calendario')">Calendario</button>
+  <button class="tab" onclick="showTab('info')">Información</button>
+</div>
+
+<div id="tab-modulos">
+  <div class="mod-grid" id="modules"></div>
+</div>
+
+<div id="tab-programa" class="hidden">
+  <div class="prog-grid" id="prog-grid"></div>
+</div>
+
+<div id="tab-calendario" class="hidden">
+  <div class="sched-grid" id="sched"></div>
+</div>
+
+<div id="tab-info" class="hidden">
+  <div class="info-card">
+    <h3>Objetivo del programa</h3>
+    <p>La industria financiera ha adoptado Python como elemento central para la gestión de riesgo, administración de portafolios y análisis cuantitativo. Este programa guía a profesionales de negocios, finanzas y economía a través de las aplicaciones más importantes de Python en el sector financiero, desde herramientas básicas hasta machine learning aplicado al crédito.</p>
+  </div>
+  <div class="info-card">
+    <h3>Metodología</h3>
+    <p>Enfoque teórico-práctico mediante notebooks interactivos en Google Colab. Cada sesión incluye ejercicios guiados aplicados al contexto financiero colombiano (COLCAP, TES, TRM, sector bancario) y ejercicios para práctica autónoma.</p>
+  </div>
+  <div class="info-card">
+    <h3>Dirigido a</h3>
+    <p>Profesionales de las áreas de negocios, finanzas y economía con nivel intermedio en finanzas y nivel básico en Python. No se requiere experiencia previa en programación avanzada.</p>
+  </div>
+  <div class="prof-card">
+    <div class="prof-hdr">
+      <div class="prof-av">PA</div>
+      <div>
+        <div class="prof-name">Paula Almonacid</div>
+        <div class="prof-role">Profesora Titular · Universidad EAFIT · PhD en Estadística</div>
+      </div>
+    </div>
+    <div class="prof-bio">
+      Profesora Titular de Finanzas en la Universidad EAFIT. Su investigación se centra en ciencia de datos financieros, machine learning, analítica predictiva y métodos cuantitativos para las finanzas. Cuenta con amplia experiencia en el desarrollo y aplicación de técnicas computacionales avanzadas para abordar problemas complejos en mercados financieros, gestión de riesgos y desarrollo económico, con énfasis en economías emergentes.<br><br>
+      Su trabajo integra enfoques econométricos tradicionales con métodos modernos de inteligencia artificial, incluyendo aprendizaje supervisado, aprendizaje por refuerzo profundo y computación cuántica. Ha liderado proyectos de investigación interdisciplinarios orientados a mejorar la precisión en pronósticos, los procesos de toma de decisiones y la inclusión financiera mediante soluciones basadas en datos.
+    </div>
+    <div class="tags-row">
+      <span class="tag">Machine learning</span>
+      <span class="tag">Econometría de panel</span>
+      <span class="tag">Gestión de riesgos</span>
+      <span class="tag">Analítica predictiva</span>
+      <span class="tag">Inclusión financiera</span>
+      <span class="tag">Deep reinforcement learning</span>
+      <span class="tag">Computación cuántica</span>
+      <span class="tag">Economías emergentes</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  modulos:[
+    {
+      id:1,color:"m1",icon:"ti-code",
+      title:"Módulo 1. Elementos básicos en Python",
+      sub:"Sesiones 1–2 · 24 y 25 de junio",
+      sesiones:[
+        {
+          num:"Sesión 1",date:"24 jun · 8–10 a.m.",
+          title:"Fundamentos de Python y estructuras de datos",
+          topics:["Funciones definidas por el usuario: argumentos, return, scope","Tuplas, listas y diccionarios: indexing, slicing, comprehensions","NumPy: arrays, operaciones vectorizadas, álgebra lineal básica","SciPy: optimización numérica (brentq para TIR de bonos)"],
+          guided:["Construir funciones de valoración de bonos: precio, duración de Macaulay, YTM","Implementar una curva de rendimiento con arrays NumPy","Calcular la TIR de un TES usando scipy.optimize.brentq"],
+          practice:["Función de precio de bono cupón cero y comparar con bono con cupones","Calcular la TIR de un portafolio de TES con scipy.optimize","Generar y analizar una matriz de correlaciones de retornos con NumPy"]
+        },
+        {
+          num:"Sesión 2",date:"25 jun · 8–10 a.m.",
+          title:"pandas, statsmodels y visualización financiera",
+          topics:["pandas: DataFrames, series temporales, merge, groupby, resample, rolling","Statsmodels: regresión OLS, beta de mercado, diagnósticos (JB, DW, BP)","Matplotlib: dashboard de 4 paneles — retorno acumulado, volatilidad, heatmap","Plotly: gráficos interactivos OHLC, heatmap de correlaciones"],
+          guided:["Cargar precios del COLCAP y calcular retornos logarítmicos con pandas","Estimar la beta de una acción contra el COLCAP con OLS","Construir un dashboard 2×2 de riesgo-retorno con Matplotlib"],
+          practice:["Beta de PFBCOL con errores robustos HC3: comparar intervalos de confianza","Descargar la TRM con yfinance y analizar retornos con Plotly","Scatter riesgo-retorno con Línea del Mercado de Capitales (CML)"]
+        }
+      ]
+    },
+    {
+      id:2,color:"m2",icon:"ti-dice",
+      title:"Módulo 2. Tópicos en modelación",
+      sub:"Sesiones 3–4 · 7 y 8 de julio",
+      sesiones:[
+        {
+          num:"Sesión 3",date:"7 jul · 8–10 a.m.",
+          title:"Probabilidad, estadística y simulación Monte Carlo",
+          topics:["Distribuciones: normal, log-normal, t-Student, Pareto — ajuste por MLE y AIC","Inferencia estadística: Jarque-Bera, Shapiro-Wilk, Ljung-Box, ARCH-LM","Movimiento Browniano Geométrico (GBM): trayectorias de precio","VaR histórico, paramétrico y Monte Carlo · CVaR · Pricing de opciones europeas"],
+          guided:["Ajustar distribuciones a retornos reales del COLCAP (MLE + QQ-plot)","Simular 5.000 trayectorias GBM para PFBCOL a 1 mes","Calcular el precio de una opción call por Monte Carlo vs Black-Scholes"],
+          practice:["VaR paramétrico al 99% con t-Student vs normal: ¿cuál es más conservador?","Simular el valor futuro de un fondo de pensiones a 30 años","Delta de la opción call por diferencias finitas: comparar con Black-Scholes analítico"]
+        },
+        {
+          num:"Sesión 4",date:"8 jul · 8–10 a.m.",
+          title:"Series de tiempo financieras: ARIMA y GARCH",
+          topics:["Estacionariedad: pruebas ADF, KPSS — aplicadas a nivel y retornos de la TRM","ACF, PACF e identificación automática con auto_arima (selección por AIC)","ARIMA: estimación, diagnóstico de residuos, pronóstico con IC","GARCH(1,1) con t-Student: volatilidad condicional, VaR dinámico, backtesting (Kupiec)"],
+          guided:["Aplicar ADF + KPSS a la TRM y decidir d para ARIMA","Seleccionar y estimar ARIMA con auto_arima, diagnosticar residuos","Estimar GARCH(1,1), graficar volatilidad condicional y comparar VaR estático vs dinámico"],
+          practice:["ARIMA para el COLCAP: comparar con naive forecast por RMSE","GJR-GARCH y efecto apalancamiento: ¿las caídas amplifican más la volatilidad?","Backtesting del VaR dinámico al 99% con test de Kupiec"]
+        }
+      ]
+    },
+    {
+      id:3,color:"m3",icon:"ti-building-bank",
+      title:"Módulo 3. Tópicos en finanzas",
+      sub:"Sesiones 5–6 · 15 y 16 de julio",
+      sesiones:[
+        {
+          num:"Sesión 5",date:"15 jul · 8–10 a.m.",
+          title:"Modelos de factores y Value at Risk de portafolio",
+          topics:["CAPM: alfa de Jensen, beta, R², Treynor — para portafolio de 5 acciones COLCAP","Fama-French 3 factores: SMB, HML — comparar R² vs CAPM","VaR de portafolio: histórico, paramétrico (w'Σw) y Monte Carlo (descomposición Cholesky)","Component VaR, CVaR y backtesting (test de Kupiec)"],
+          guided:["Estimar CAPM para cada activo y calcular la beta del portafolio ponderado","VaR por tres métodos y beneficio de diversificación en COP","Descomponer el VaR por activo (Component VaR) y validar con test de Kupiec"],
+          practice:["Fama-French con datos reales: ¿los factores SMB y HML son significativos?","VaR rolling 252 días y exceedances por año: ¿el VaR anticipa períodos de estrés?","Correlaciones en períodos de alta vs baja volatilidad: ¿la diversificación falla en crisis?"]
+        },
+        {
+          num:"Sesión 6",date:"16 jul · 8–10 a.m.",
+          title:"Optimización de portafolios",
+          topics:["Formulación de Markowitz: scipy.optimize.minimize (SLSQP) — frontera eficiente 80 puntos","Mínima varianza y máximo Sharpe: funciones reutilizables con Capital Market Line","Restricciones prácticas: sin ventas en corto, límite por activo (35%), mínimo (2%), sector","Risk Parity: igualar contribuciones marginales al riesgo — robusto a errores en μ"],
+          guided:["Construir la frontera eficiente y graficarla con activos individuales superpuestos","Calcular mínima varianza y máximo Sharpe con y sin restricciones","Estimar el portafolio de Risk Parity y comparar concentración (HHI) vs las otras estrategias"],
+          practice:["Frontera con datos reales del COLCAP: costo de la restricción de no-cortos","Rebalanceo trimestral de máximo Sharpe: ¿agrega valor después de costos de transacción?","Sensibilidad de Markowitz a errores en μ: ¿cuál estrategia es más robusta?"]
+        }
+      ]
+    },
+    {
+      id:4,color:"m4",icon:"ti-brain",
+      title:"Módulo 4. Tópicos en Machine Learning",
+      sub:"Sesión 7 · 22 de julio",
+      sesiones:[
+        {
+          num:"Sesión 7",date:"22 jul · 8–10 a.m.",
+          title:"Machine learning aplicado a finanzas",
+          topics:["Clasificación supervisada: regresión logística, árbol de decisión, KNN — scoring crediticio","Evaluación: ROC-AUC, F1, matriz de confusión, Error Tipo I vs Tipo II, calibración de umbral","Clustering: K-Means — segmentación de cartera bancaria por perfil de riesgo","Selección de modelos: cross-validation estratificada, Grid Search, regularización L1/L2"],
+          guided:["Pipeline completo: preparar datos, stratify, StandardScaler, entrenar tres modelos","Comparar ROC-AUC y F1 de LogReg vs árbol vs KNN — curvas ROC superpuestas","K-Means sobre dataset bancario: método del codo + silueta + perfilamiento por segmento"],
+          practice:["Umbral óptimo para minimizar Error Tipo II (recall ≥ 70%): costo en Tipo I","Random Forest (n=100): comparar con árbol simple en AUC y feature importance","Clustering jerárquico (Ward) vs K-Means: ¿mismos segmentos? ¿mayor silueta?"]
+        }
+      ]
+    }
+  ],
+  calendario:[
+    {num:"Sesión 1",date:"Martes 24 de junio",mod:"Módulo 1",tema:"Fundamentos: NumPy, SciPy, estructuras de datos"},
+    {num:"Sesión 2",date:"Miércoles 25 de junio",mod:"Módulo 1",tema:"pandas, statsmodels, Matplotlib, Plotly"},
+    {num:"Sesión 3",date:"Lunes 7 de julio",mod:"Módulo 2",tema:"Distribuciones, Monte Carlo, VaR, opciones"},
+    {num:"Sesión 4",date:"Martes 8 de julio",mod:"Módulo 2",tema:"ARIMA, GARCH, VaR dinámico, Kupiec"},
+    {num:"Sesión 5",date:"Martes 15 de julio",mod:"Módulo 3",tema:"Modelos de factores, VaR de portafolio"},
+    {num:"Sesión 6",date:"Miércoles 16 de julio",mod:"Módulo 3",tema:"Optimización: Markowitz, Sharpe, Risk Parity"},
+    {num:"Sesión 7",date:"Martes 22 de julio",mod:"Módulo 4",tema:"Machine Learning: scoring, clustering, CV"},
+  ],
+  programa:[
+    {id:1,color:"m1",icon:"ti-code",title:"Módulo 1 · Elementos básicos",items:["Funciones, listas, tuplas, diccionarios","NumPy vectorizado y SciPy (brentq)","pandas, statsmodels, visualización","Precio de bonos, TIR, duración, beta"]},
+    {id:2,color:"m2",icon:"ti-dice",title:"Módulo 2 · Modelación",items:["Distribuciones y ajuste por MLE/AIC","Simulación Monte Carlo y GBM","VaR histórico, paramétrico, MC, CVaR","ARIMA, GARCH, VaR dinámico"]},
+    {id:3,color:"m3",icon:"ti-building-bank",title:"Módulo 3 · Finanzas",items:["CAPM, Fama-French, Component VaR","Backtesting con test de Kupiec","Frontera eficiente de Markowitz","Mínima varianza, Sharpe, Risk Parity"]},
+    {id:4,color:"m4",icon:"ti-brain",title:"Módulo 4 · Machine Learning",items:["Regresión logística, árbol, KNN","ROC-AUC, F1, matriz de confusión","K-Means y clustering de cartera","Cross-validation y Grid Search"]},
+  ]
+};
+
+let openMods = new Set([1]);
+let exTabs   = {};
+
+function renderModules(){
+  const c = document.getElementById('modules');
+  c.innerHTML = DATA.modulos.map(m=>`
+    <div class="mod-card">
+      <div class="mod-hdr" onclick="toggleMod(${m.id})">
+        <div class="mod-badge ${m.color}"><i class="ti ${m.icon}" style="font-size:14px" aria-hidden="true"></i></div>
+        <div style="flex:1">
+          <div class="mod-title">${m.title}</div>
+          <div class="mod-sub">${m.sub}</div>
+        </div>
+        <i class="ti ti-chevron-down chev ${openMods.has(m.id)?'open':''}" aria-hidden="true"></i>
+      </div>
+      <div class="mod-body" ${openMods.has(m.id)?'':'style="display:none"'}>
+        <div class="ses-list">
+          ${m.sesiones.map(s=>renderSes(m.id,s)).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSes(mId,s){
+  const key=`${mId}-${s.num}`;
+  const tab=exTabs[key]||'guided';
+  return`<div class="ses">
+    <div class="ses-hdr">
+      <span class="ses-num">${s.num}</span>
+      <span class="ses-date">${s.date}</span>
+    </div>
+    <div class="ses-title">${s.title}</div>
+    <div class="topics">${s.topics.map(t=>`<div class="topic">${t}</div>`).join('')}</div>
+    <div class="ex-sec">
+      <div class="ex-tabs">
+        <button class="ex-tab ${tab==='guided'?'active':''}" onclick="swEx('${key}','guided')">Ejercicios guiados</button>
+        <button class="ex-tab ${tab==='practice'?'active':''}" onclick="swEx('${key}','practice')">Para practicar</button>
+      </div>
+      <div class="ex-list" id="ex-${key}">${renderExItems(s,tab)}</div>
+    </div>
+  </div>`;
+}
+
+function renderExItems(s,tab){
+  const items=tab==='guided'?s.guided:s.practice;
+  const cls=tab==='guided'?'tag-g':'tag-p';
+  return items.map((e,i)=>`<div class="ex-item"><span class="${cls}">${i+1}</span>${e}</div>`).join('');
+}
+
+function swEx(key,tab){
+  exTabs[key]=tab;
+  const mId=parseInt(key.split('-')[0]);
+  const mod=DATA.modulos.find(m=>m.id===mId);
+  const sNum=key.substring(key.indexOf('-')+1);
+  const ses=mod.sesiones.find(s=>s.num===sNum);
+  document.getElementById('ex-'+key).innerHTML=renderExItems(ses,tab);
+  const cont=document.getElementById('ex-'+key).closest('.ses');
+  cont.querySelectorAll('.ex-tab').forEach(t=>{
+    const isG=t.textContent.includes('guiados');
+    t.classList.toggle('active',(isG&&tab==='guided')||(!isG&&tab==='practice'));
+  });
+}
+
+function toggleMod(id){
+  openMods.has(id)?openMods.delete(id):openMods.add(id);
+  renderModules();
+}
+
+function renderCalendario(){
+  document.getElementById('sched').innerHTML=DATA.calendario.map(s=>`
+    <div class="sched-card">
+      <div class="sched-num">${s.num}</div>
+      <div class="sched-date">${s.date}</div>
+      <div class="sched-mod" style="font-weight:500;color:var(--color-text-primary);margin-bottom:2px">${s.mod}</div>
+      <div class="sched-mod">${s.tema}</div>
+      <div class="sched-time"><i class="ti ti-clock" style="font-size:12px" aria-hidden="true"></i> 8:00 – 10:00 a.m.</div>
+    </div>
+  `).join('');
+}
+
+function renderPrograma(){
+  document.getElementById('prog-grid').innerHTML=DATA.programa.map(p=>`
+    <div class="prog-card">
+      <div class="prog-hdr">
+        <div class="mod-badge ${p.color}" style="width:24px;height:24px;border-radius:6px;font-size:11px">
+          <i class="ti ${p.icon}" style="font-size:12px" aria-hidden="true"></i>
+        </div>
+        <div class="prog-title">${p.title}</div>
+      </div>
+      <div class="prog-items">
+        ${p.items.map(it=>`<div class="prog-item">${it}</div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showTab(name){
+  ['modulos','programa','calendario','info'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('hidden',t!==name);
+  });
+  document.querySelectorAll('.tab').forEach(t=>{
+    const map={modulos:'módulos',programa:'programa',calendario:'calend',info:'inform'};
+    t.classList.toggle('active',t.textContent.toLowerCase().includes(map[name]||name));
+  });
+}
+
+renderModules();
+renderCalendario();
+renderPrograma();
+</script>
